@@ -1,4 +1,4 @@
-# -GUI<br>
+# System-second<br>
 ## 项目代码规范说明<br>
 1、包名使用小写英文字母<br>
 2、接口类中的方法和属性不要加任何修饰符号（public也不要加），保持代码的简洁性<br>
@@ -21,4 +21,4 @@
 15、检查new的返回值<br>
 16、释放指针时不用检查NULL<br>
 # System-second
-# System-second
+
