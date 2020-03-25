@@ -25,7 +25,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 /**
- * µÇÂ¼½çÃæ
+ * ç™»å½•ç•Œé¢
  * 
  * @author LB
  * @create
@@ -49,10 +49,10 @@ public class login extends JFrame implements ActionListener {
 	}
 
 	private void init() {
-		setTitle("ÒßÇéĞÅÏ¢¹ÜÀíÏµÍ³");
+		setTitle("ç–«æƒ…ä¿¡æ¯ç®¡ç†ç³»ç»Ÿ");
 		setLayout(new BorderLayout());
-		user = new JLabel("ÓÃ»§Ãû");
-		password = new JLabel("ÃÜÂë");
+		user = new JLabel("ç”¨æˆ·å");
+		password = new JLabel("å¯†ç ");
 
 		card = new JPanel(cardLayout);
 
@@ -60,14 +60,14 @@ public class login extends JFrame implements ActionListener {
 
 		username = new JTextField();
 		passwordField = new JPasswordField();
-		loginButton = new JButton("µÇÂ¼");
+		loginButton = new JButton("ç™»å½•");
 		loginButton.addActionListener(this);
 
-		JPanel titlepanel = new JPanel(new FlowLayout());// ±êÌâÃæ°å
-		JLabel title = new JLabel("ÒßÇéĞÅÏ¢¹ÜÀíÏµÍ³");
+		JPanel titlepanel = new JPanel(new FlowLayout());// æ ‡é¢˜é¢æ¿
+		JLabel title = new JLabel("ç–«æƒ…ä¿¡æ¯ç®¡ç†ç³»ç»Ÿ");
 		titlepanel.add(title);
 
-		JPanel loginpanel = new JPanel();// µÇÂ¼Ãæ°å
+		JPanel loginpanel = new JPanel();// ç™»å½•é¢æ¿
 		loginpanel.setLayout(null);
 
 		user.setBounds(50, 20, 50, 20);
@@ -92,20 +92,20 @@ public class login extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	// ²¥·ÅÁåÉù
-	static void playMusic() {// ±³¾°ÒôÀÖ²¥·Å
+	// æ’­æ”¾é“ƒå£°
+	static void playMusic() {// èƒŒæ™¯éŸ³ä¹æ’­æ”¾
 		try {
 			java.net.URL cb;
-			File f = new File("src/images/Taylor+Swift+-+Ours.wav"); // ÒıºÅÀïÃæµÄÊÇÒôÀÖÎÄ¼şËùÔÚµÄÂ·¾¶
+			File f = new File("src/images/Taylor+Swift+-+Ours.wav"); // å¼•å·é‡Œé¢çš„æ˜¯éŸ³ä¹æ–‡ä»¶æ‰€åœ¨çš„è·¯å¾„
 			cb = f.toURL();
 			AudioClip aau;
 			aau = Applet.newAudioClip(cb);
 
 			aau.play();
-			aau.loop();// Ñ­»·²¥·Å
-			System.out.println("¿ÉÒÔ²¥·Å");
-			// Ñ­»·²¥·Å aau.play()
-			// µ¥Çú aau.stop()Í£Ö¹²¥·Å
+			aau.loop();// å¾ªç¯æ’­æ”¾
+			System.out.println("å¯ä»¥æ’­æ”¾");
+			// å¾ªç¯æ’­æ”¾ aau.play()
+			// å•æ›² aau.stop()åœæ­¢æ’­æ”¾
 
 		} catch (MalformedURLException e) {
 
@@ -115,78 +115,78 @@ public class login extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		new login();
-		String z = JOptionPane.showInputDialog("ÄÖÖÓ:");
+		String z = JOptionPane.showInputDialog("é—¹é’Ÿ:");
 		Runnable runnable = new Runnable() {
-			// ´´½¨ run ·½·¨
+			// åˆ›å»º run æ–¹æ³•
 			public void run() {
-				// »ñÈ¡µçÄÔÊ±¼ä
+				// è·å–ç”µè„‘æ—¶é—´
 				java.util.Date utildate = new java.util.Date();
 				str = DateFormat.getTimeInstance().format(utildate);
 				System.out.println(str);
-				System.out.println("Hello£¡");
+				System.out.println("Helloï¼");
 				b = str.compareTo(z);
 				if (b == 0) {
-					System.out.println("1£¡");
+					System.out.println("1ï¼");
 					playMusic();
 				}
 			}
 		};
 		ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-		// µÚ¶ş¸ö²ÎÊıÎªÊ×´ÎÖ´ĞĞµÄÑÓÊ±Ê±¼ä£¬µÚÈı¸ö²ÎÊıÎª¶¨Ê±Ö´ĞĞµÄ¼ä¸ôÊ±¼ä
-		// 10£ºÃë 1£ºÃë
-		// µÚÒ»´ÎÖ´ĞĞµÄÊ±¼äÎª10Ãë£¬È»ºóÃ¿¸ôÒ»ÃëÖ´ĞĞÒ»´Î
+		// ç¬¬äºŒä¸ªå‚æ•°ä¸ºé¦–æ¬¡æ‰§è¡Œçš„å»¶æ—¶æ—¶é—´ï¼Œç¬¬ä¸‰ä¸ªå‚æ•°ä¸ºå®šæ—¶æ‰§è¡Œçš„é—´éš”æ—¶é—´
+		// 10ï¼šç§’ 1ï¼šç§’
+		// ç¬¬ä¸€æ¬¡æ‰§è¡Œçš„æ—¶é—´ä¸º10ç§’ï¼Œç„¶åæ¯éš”ä¸€ç§’æ‰§è¡Œä¸€æ¬¡
 		service.scheduleAtFixedRate(runnable, 10, 1, TimeUnit.SECONDS);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		boolean flag = false;// ÓÃÀ´±êÖ¾ÓÃ»§ÊÇ·ñÕıÈ·
+		boolean flag = false;// ç”¨æ¥æ ‡å¿—ç”¨æˆ·æ˜¯å¦æ­£ç¡®
 
 		if (e.getSource() == loginButton) {
-			ArrayList<Users> list = new CheckUsers().getUsers();// »ñµÃËùÓĞÓÃ»§ĞÅÏ¢
-			for (int i = 0; i < list.size(); i++) {// ±éÀúËùÓĞÓÃ»§ĞÅÏ¢£¬ÒÔ´ËÀ´ÅĞ¶ÏÊäÈëµÄĞÅÏ¢ÊÇ·ñÕıÈ·
+			ArrayList<Users> list = new CheckUsers().getUsers();// è·å¾—æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
+			for (int i = 0; i < list.size(); i++) {// éå†æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯ï¼Œä»¥æ­¤æ¥åˆ¤æ–­è¾“å…¥çš„ä¿¡æ¯æ˜¯å¦æ­£ç¡®
 				users = list.get(i);
 				String passwordStr = new String(passwordField.getPassword());
 				if (username.getText().equals(users.getName()) && passwordStr.equals(users.getPassword())) {
-					if (users.getType() == 1) {// Ñ§Éú
+					if (users.getType() == 1) {// å­¦ç”Ÿ
 						type = users.getType();
-						JOptionPane.showMessageDialog(null, "»¶Ó­µÇÂ¼(Ñ§Éú)", "ÒßÇéĞÅÏ¢¹ÜÀíÏµÍ³", JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.showMessageDialog(null, "æ¬¢è¿ç™»å½•(å­¦ç”Ÿ)", "ç–«æƒ…ä¿¡æ¯ç®¡ç†ç³»ç»Ÿ", JOptionPane.PLAIN_MESSAGE);
 					}
-					if (users.getType() == 5) {// ½ÌÖ°¹¤
+					if (users.getType() == 5) {// æ•™èŒå·¥
 						type = users.getType();
-						JOptionPane.showMessageDialog(null, "»¶Ó­µÇÂ¼(½ÌÖ°¹¤)", "ÒßÇéĞÅÏ¢¹ÜÀíÏµÍ³", JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.showMessageDialog(null, "æ¬¢è¿ç™»å½•(æ•™èŒå·¥)", "ç–«æƒ…ä¿¡æ¯ç®¡ç†ç³»ç»Ÿ", JOptionPane.PLAIN_MESSAGE);
 					}
-					if (users.getType() == 2) {// ¶ş¼¶·ÀÒß²¿ÃÅ
+					if (users.getType() == 2) {// äºŒçº§é˜²ç–«éƒ¨é—¨
 						type = users.getType();
-						JOptionPane.showMessageDialog(null, "»¶Ó­µÇÂ¼(¶ş¼¶·ÀÒß²¿ÃÅ)", "ÒßÇéĞÅÏ¢¹ÜÀíÏµÍ³", JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.showMessageDialog(null, "æ¬¢è¿ç™»å½•(äºŒçº§é˜²ç–«éƒ¨é—¨)", "ç–«æƒ…ä¿¡æ¯ç®¡ç†ç³»ç»Ÿ", JOptionPane.PLAIN_MESSAGE);
 					}
-					if (users.getType() == 3) {// ¶ş¼¶·ÀÒß²¿ÃÅ¸ºÔğÈË
+					if (users.getType() == 3) {// äºŒçº§é˜²ç–«éƒ¨é—¨è´Ÿè´£äºº
 						type = users.getType();
 						System.out.println(type);
-						JOptionPane.showMessageDialog(null, "»¶Ó­µÇÂ¼(¶ş¼¶·ÀÒß²¿ÃÅ¸ºÔğÈË)", "ÒßÇéĞÅÏ¢¹ÜÀíÏµÍ³", JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.showMessageDialog(null, "æ¬¢è¿ç™»å½•(äºŒçº§é˜²ç–«éƒ¨é—¨è´Ÿè´£äºº)", "ç–«æƒ…ä¿¡æ¯ç®¡ç†ç³»ç»Ÿ", JOptionPane.PLAIN_MESSAGE);
 					}
-					if (users.getType() == 4) {// ·ÀÒß°ì¸ºÔğÈË
+					if (users.getType() == 4) {// é˜²ç–«åŠè´Ÿè´£äºº
 						type = users.getType();
 						System.out.println(type);
-						JOptionPane.showMessageDialog(null, "»¶Ó­µÇÂ¼(·À¿Ø°ì)", "ÒßÇéĞÅÏ¢¹ÜÀíÏµÍ³", JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.showMessageDialog(null, "æ¬¢è¿ç™»å½•(é˜²æ§åŠ)", "ç–«æƒ…ä¿¡æ¯ç®¡ç†ç³»ç»Ÿ", JOptionPane.PLAIN_MESSAGE);
 					}
 					flag = true;
-					break;// Èç¹ûĞÅÏ¢ÕıÈ·¾ÍÍË³ö±éÀú£¬Ìá¸ßĞ§ÂÊ
+					break;// å¦‚æœä¿¡æ¯æ­£ç¡®å°±é€€å‡ºéå†ï¼Œæé«˜æ•ˆç‡
 				}
 			}
-			if (!flag) {// ĞÅÏ¢²»ÕıÈ·£¬ÖØĞÂÊäÈë
-				JOptionPane.showMessageDialog(null, "ÇëÊäÈëÕıÈ·µÄÓÃ»§Ãû»òÃÜÂë", "¾¯¸æ", JOptionPane.WARNING_MESSAGE);
+			if (!flag) {// ä¿¡æ¯ä¸æ­£ç¡®ï¼Œé‡æ–°è¾“å…¥
+				JOptionPane.showMessageDialog(null, "è¯·è¾“å…¥æ­£ç¡®çš„ç”¨æˆ·åæˆ–å¯†ç ", "è­¦å‘Š", JOptionPane.WARNING_MESSAGE);
 				username.setText("");
 				passwordField.setText("");
 			} else {
-				// µ±ÊäÈëµÄĞÅÏ¢ÕıÈ·Ê±£¬¾Í¿ªÊ¼¼ÓÔØÑ¡Ïî¿¨½çÃæ£¬²¢°ÑÑ¡Ïî¿¨½çÃæ¼ÓÈëµ½¿¨Æ¬²¼¾ÖÆ÷ÖĞ
-				DormitoryInfo dormitoryInfo = new DormitoryInfo(users, type);// ËŞÉáĞÅÏ¢
+				// å½“è¾“å…¥çš„ä¿¡æ¯æ­£ç¡®æ—¶ï¼Œå°±å¼€å§‹åŠ è½½é€‰é¡¹å¡ç•Œé¢ï¼Œå¹¶æŠŠé€‰é¡¹å¡ç•Œé¢åŠ å…¥åˆ°å¡ç‰‡å¸ƒå±€å™¨ä¸­
+				DormitoryInfo dormitoryInfo = new DormitoryInfo(users, type);// å®¿èˆä¿¡æ¯
 				cardPanel = new JPanel();
 				jTabbedPane = new JTabbedPane(JTabbedPane.LEFT);
-				jTabbedPane.add("ËŞÉáĞÅÏ¢", dormitoryInfo);
+				jTabbedPane.add("ä¿¡æ¯", dormitoryInfo);
 				cardPanel.add(jTabbedPane);
 				card.add(cardPanel, "info");
-				cardLayout.show(card, "info");// ÊäÈëĞÅÏ¢ÕıÈ·¾ÍÏÔÊ¾²Ù×÷½çÃæ£¬·ñÔòÖØĞÂÊäÈëÕıÈ·ĞÅÏ¢
+				cardLayout.show(card, "info");// è¾“å…¥ä¿¡æ¯æ­£ç¡®å°±æ˜¾ç¤ºæ“ä½œç•Œé¢ï¼Œå¦åˆ™é‡æ–°è¾“å…¥æ­£ç¡®ä¿¡æ¯
 			}
 		}
 	}
