@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-/**获得用户列表
+/**鑾峰緱鐢ㄦ埛鍒楄〃
  */
 public class CheckUsers {
     GetConnection getConnection=new GetConnection();
@@ -26,7 +26,7 @@ public class CheckUsers {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("读取失败");
+            System.out.println("璇诲彇澶辫触");
         }
         return list;
     }
