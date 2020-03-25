@@ -40,16 +40,16 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
 /**
- * ËŞÉáĞÅÏ¢(Ñ§Éú)
+ * ä¿¡æ¯(å­¦ç”Ÿ)
  */
 public class DormitoryInfo extends JPanel implements ActionListener {
 	Connection connection = new GetConnection().GetConnection();
-	Users users;// µ±Ç°ÓÃ»§
-	int type;// ÓÃ»§ÀàĞÍ
-	String Phone = "";// ËŞÉáºÅ
+	Users users;// å½“å‰ç”¨æˆ·
+	int type;// ç”¨æˆ·ç±»å‹
+	String Phone = "";// ç”µè¯å·
 	JTable table = new JTable();
-	String[] col = { "Ñ§ºÅ", "ĞÕÃû", "ÓĞÎŞ¸ĞÈ¾", "Ñ§Ôº", "ÁªÏµµç»°", "µÇ¼ÇÊ±¼ä" };
-	DefaultTableModel mm = new DefaultTableModel(col, 0); // ¶¨ÒåÒ»¸ö±íµÄÄ£°å
+	String[] col = { "å­¦å·", "å§“å", "æœ‰æ— æ„ŸæŸ“", "å­¦é™¢", "è”ç³»ç”µè¯", "ç™»è®°æ—¶é—´" };
+	DefaultTableModel mm = new DefaultTableModel(col, 0); // å®šä¹‰ä¸€ä¸ªè¡¨çš„æ¨¡æ¿
 	JLabel sno, name, Sdept, suse, es, time;
 	JTextField snoText, nameText, SdeptText, suseText, esText, timeText;
 	JButton add;
@@ -63,59 +63,59 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 
 	static ChartPanel frame1;
 	static int a1, a2;
-	static int x;// ÅĞ¶ÏÉú³ÉÄÇÏîÊı¾İµÄÍ³¼ÆÍ¼
+	static int x;// åˆ¤æ–­ç”Ÿæˆé‚£é¡¹æ•°æ®çš„ç»Ÿè®¡å›¾
 	static JFreeChart chart;
 	static String[] data0;
 
 	private DormitoryInfo() {
 		if (x == 1) {
-			CategoryDataset dataset = getDataSet();// ½«»ñµÃµÄÊı¾İ´«µİ¸øCategoryDatasetÀàµÄ¶ÔÏó
-			chart = ChartFactory.createBarChart3D("¸ĞÈ¾ÈËÊıÍ³¼Æ", // Í¼±í±êÌâ
-					"ÓĞÎŞ¸ĞÈ¾", // Ä¿Â¼ÖáµÄÏÔÊ¾±êÇ©
-					"ÈËÊı/¸ö", // ÊıÖµÖáµÄÏÔÊ¾±êÇ©
-					dataset, // Êı¾İ¼¯
-					PlotOrientation.VERTICAL, // Í¼±í·½Ïò£ºË®Æ½¡¢´¹Ö±
-					true, // ÊÇ·ñÏÔÊ¾Í¼Àı(¶ÔÓÚ¼òµ¥µÄÖù×´Í¼±ØĞëÊÇfalse)
-					false, // ÊÇ·ñÉú³É¹¤¾ß
-					false // ÊÇ·ñÉú³ÉURLÁ´½Ó
+			CategoryDataset dataset = getDataSet();// å°†è·å¾—çš„æ•°æ®ä¼ é€’ç»™CategoryDatasetç±»çš„å¯¹è±¡
+			chart = ChartFactory.createBarChart3D("æ„ŸæŸ“äººæ•°ç»Ÿè®¡", // å›¾è¡¨æ ‡é¢˜
+					"æœ‰æ— æ„ŸæŸ“", // ç›®å½•è½´çš„æ˜¾ç¤ºæ ‡ç­¾
+					"äººæ•°/ä¸ª", // æ•°å€¼è½´çš„æ˜¾ç¤ºæ ‡ç­¾
+					dataset, // æ•°æ®é›†
+					PlotOrientation.VERTICAL, // å›¾è¡¨æ–¹å‘ï¼šæ°´å¹³ã€å‚ç›´
+					true, // æ˜¯å¦æ˜¾ç¤ºå›¾ä¾‹(å¯¹äºç®€å•çš„æŸ±çŠ¶å›¾å¿…é¡»æ˜¯false)
+					false, // æ˜¯å¦ç”Ÿæˆå·¥å…·
+					false // æ˜¯å¦ç”ŸæˆURLé“¾æ¥
 			);
 		}
 		if (x == 2) {
-			CategoryDataset dataset = getDataSet1();// ½«»ñµÃµÄÊı¾İ´«µİ¸øCategoryDatasetÀàµÄ¶ÔÏó
-			chart = ChartFactory.createBarChart3D("ÌîĞ´ÈËÊıÍ³¼Æ", // Í¼±í±êÌâ
-					"ÓĞÎŞÌîĞ´", // Ä¿Â¼ÖáµÄÏÔÊ¾±êÇ©
-					"ÈËÊı/¸ö", // ÊıÖµÖáµÄÏÔÊ¾±êÇ©
-					dataset, // Êı¾İ¼¯
-					PlotOrientation.VERTICAL, // Í¼±í·½Ïò£ºË®Æ½¡¢´¹Ö±
-					true, // ÊÇ·ñÏÔÊ¾Í¼Àı(¶ÔÓÚ¼òµ¥µÄÖù×´Í¼±ØĞëÊÇfalse)
-					false, // ÊÇ·ñÉú³É¹¤¾ß
-					false // ÊÇ·ñÉú³ÉURLÁ´½Ó
+			CategoryDataset dataset = getDataSet1();// å°†è·å¾—çš„æ•°æ®ä¼ é€’ç»™CategoryDatasetç±»çš„å¯¹è±¡
+			chart = ChartFactory.createBarChart3D("å¡«å†™äººæ•°ç»Ÿè®¡", // å›¾è¡¨æ ‡é¢˜
+					"æœ‰æ— å¡«å†™", // ç›®å½•è½´çš„æ˜¾ç¤ºæ ‡ç­¾
+					"äººæ•°/ä¸ª", // æ•°å€¼è½´çš„æ˜¾ç¤ºæ ‡ç­¾
+					dataset, // æ•°æ®é›†
+					PlotOrientation.VERTICAL, // å›¾è¡¨æ–¹å‘ï¼šæ°´å¹³ã€å‚ç›´
+					true, // æ˜¯å¦æ˜¾ç¤ºå›¾ä¾‹(å¯¹äºç®€å•çš„æŸ±çŠ¶å›¾å¿…é¡»æ˜¯false)
+					false, // æ˜¯å¦ç”Ÿæˆå·¥å…·
+					false // æ˜¯å¦ç”ŸæˆURLé“¾æ¥
 			);
 		}
-		CategoryPlot plot = chart.getCategoryPlot();// »ñÈ¡Í¼±íÇøÓò¶ÔÏó
-		CategoryAxis domainAxis = plot.getDomainAxis(); // Ë®Æ½µ×²¿ÁĞ±í
-		domainAxis.setLabelFont(new Font("ºÚÌå", Font.BOLD, 14)); // Ë®Æ½µ×²¿±êÌâ
-		domainAxis.setTickLabelFont(new Font("ËÎÌå", Font.BOLD, 12)); // ´¹Ö±±êÌâ
-		ValueAxis rangeAxis = plot.getRangeAxis();// »ñÈ¡Öù×´
-		rangeAxis.setLabelFont(new Font("ºÚÌå", Font.BOLD, 15));
-		chart.getLegend().setItemFont(new Font("ºÚÌå", Font.BOLD, 15));
-		chart.getTitle().setFont(new Font("ËÎÌå", Font.BOLD, 20));// ÉèÖÃ±êÌâ×ÖÌå
+		CategoryPlot plot = chart.getCategoryPlot();// è·å–å›¾è¡¨åŒºåŸŸå¯¹è±¡
+		CategoryAxis domainAxis = plot.getDomainAxis(); // æ°´å¹³åº•éƒ¨åˆ—è¡¨
+		domainAxis.setLabelFont(new Font("é»‘ä½“", Font.BOLD, 14)); // æ°´å¹³åº•éƒ¨æ ‡é¢˜
+		domainAxis.setTickLabelFont(new Font("å®‹ä½“", Font.BOLD, 12)); // å‚ç›´æ ‡é¢˜
+		ValueAxis rangeAxis = plot.getRangeAxis();// è·å–æŸ±çŠ¶
+		rangeAxis.setLabelFont(new Font("é»‘ä½“", Font.BOLD, 15));
+		chart.getLegend().setItemFont(new Font("é»‘ä½“", Font.BOLD, 15));
+		chart.getTitle().setFont(new Font("å®‹ä½“", Font.BOLD, 20));// è®¾ç½®æ ‡é¢˜å­—ä½“
 
-		frame1 = new ChartPanel(chart, true); // ÕâÀïÒ²¿ÉÒÔÓÃchartFrame,¿ÉÒÔÖ±½ÓÉú³ÉÒ»¸ö¶ÀÁ¢µÄFrame
+		frame1 = new ChartPanel(chart, true); // è¿™é‡Œä¹Ÿå¯ä»¥ç”¨chartFrame,å¯ä»¥ç›´æ¥ç”Ÿæˆä¸€ä¸ªç‹¬ç«‹çš„Frame
 
 	}
 
 	private static CategoryDataset getDataSet() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.addValue(a1, "¸ĞÈ¾", "¸ĞÈ¾");// ³É¼¨1
-		dataset.addValue(a2, "Î´¸ĞÈ¾", "Î´¸ĞÈ¾");// ³É¼¨2
+		dataset.addValue(a1, "æ„ŸæŸ“", "æ„ŸæŸ“");// æˆç»©1
+		dataset.addValue(a2, "æœªæ„ŸæŸ“", "æœªæ„ŸæŸ“");// æˆç»©2
 		return dataset;
 	}
 
 	private static CategoryDataset getDataSet1() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.addValue(a1, "ÌîĞ´", "ÌîĞ´");// ³É¼¨1
-		dataset.addValue(a2 - a1, "Î´ÌîĞ´", "Î´ÌîĞ´");// ³É¼¨2
+		dataset.addValue(a1, "å¡«å†™", "å¡«å†™");// æˆç»©1
+		dataset.addValue(a2 - a1, "æœªå¡«å†™", "æœªå¡«å†™");// æˆç»©2
 		return dataset;
 	}
 
@@ -124,13 +124,13 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 
 	}
 
-	public DormitoryInfo(Users users, int type) {// ´ÓµÇÂ¼½çÃæ´«»Ø£¬ÓÃ»§ÃûºÍÓÃ»§ÀàĞÍ
+	public DormitoryInfo(Users users, int type) {// ä»ç™»å½•ç•Œé¢ä¼ å›ï¼Œç”¨æˆ·åå’Œç”¨æˆ·ç±»å‹
 		this.type = type;
 		this.users = users;
 		setLayout(new FlowLayout());
 
 		table.setModel(mm);
-		table.setRowSorter(new TableRowSorter<>(mm));// ÅÅĞò
+		table.setRowSorter(new TableRowSorter<>(mm));// æ’åº
 		JPanel jPanel = new JPanel(new FlowLayout());
 		JScrollPane js = new JScrollPane(table);
 		jPanel.add(js);
@@ -142,7 +142,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 	private void search() {
 		PreparedStatement state;
 		ResultSet resultSet;
-		if (type == 1) {// Ñ§Éú
+		if (type == 1) {// å­¦ç”Ÿ
 			try {
 				inquire();
 				String select = "select Phone from ES where Sname" + "=" + "'" + users.getName() + "'";
@@ -169,7 +169,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e.printStackTrace();
 			}
 		}
-		if (type == 2) {// ¶ş¼¶·ÀÒß²¿ÃÅ
+		if (type == 2) {// äºŒçº§é˜²ç–«éƒ¨é—¨
 			try {
 				inquire1();
 				String select = "select Phone from ES where Sname" + "=" + "'" + users.getName() + "'";
@@ -196,7 +196,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e.printStackTrace();
 			}
 		}
-		if (type == 3) {// ¶ş¼¶·ÀÒß²¿ÃÅ¸ºÔğÈË
+		if (type == 3) {// äºŒçº§é˜²ç–«éƒ¨é—¨è´Ÿè´£äºº
 			try {
 				xiugai();
 				int n = 2;
@@ -216,7 +216,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e.printStackTrace();
 			}
 		}
-		if (type == 4) {// ·À¿Ø°ì
+		if (type == 4) {// é˜²æ§åŠ
 			try {
 				xiugai1();
 				state = connection.prepareStatement("select *from ES");
@@ -235,7 +235,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e.printStackTrace();
 			}
 		}
-		if (type == 5) {// ½ÌÖ°¹¤
+		if (type == 5) {// æ•™èŒå·¥
 			try {
 				inquire2();
 				String select = "select Phone from ES where Sname" + "=" + "'" + users.getName() + "'";
@@ -264,28 +264,28 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 		}
 	}
 
-	private void inquire() {// Ñ§Éú
-		sno = new JLabel("Ñ§ºÅ");
-		Sdept = new JLabel("Ñ§Ôº");
-		suse = new JLabel("µç»°");
-		es = new JLabel("¸ĞÈ¾Çé¿ö");
-		time = new JLabel("µÇ¼ÇÊ±¼ä");
+	private void inquire() {// å­¦ç”Ÿ
+		sno = new JLabel("å­¦å·");
+		Sdept = new JLabel("å­¦é™¢");
+		suse = new JLabel("ç”µè¯");
+		es = new JLabel("æ„ŸæŸ“æƒ…å†µ");
+		time = new JLabel("ç™»è®°æ—¶é—´");
 		snoText = new JTextField(10);
 		SdeptText = new JTextField(10);
 		suseText = new JTextField(10);
 		esText = new JTextField(10);
 		timeText = new JTextField(10);
-		name = new JLabel("Ãû×Ö");
+		name = new JLabel("åå­—");
 		nameText = new JTextField(10);
 		suguan = new JPanel(new GridLayout(7, 2));
-		add = new JButton("Ìá½»");
+		add = new JButton("æäº¤");
 		add.addActionListener(this);
-		sno.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		name.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		Sdept.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		suse.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		es.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		time.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
+		sno.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		name.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		Sdept.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		suse.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		es.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		time.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
 		snoText.setBounds(0, 0, 240, 40);
 		nameText.setBounds(0, 0, 240, 40);
 		SdeptText.setBounds(0, 0, 240, 40);
@@ -308,28 +308,28 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 		suguan.add(add);
 	}
 
-	private void inquire1() {// ¶ş¼¶·ÀÒß²¿ÃÅ
-		sno = new JLabel("Ñ§ºÅ");
-		Sdept = new JLabel("ËùÊô²¿ÃÅ");
-		suse = new JLabel("µç»°");
-		es = new JLabel("¸ĞÈ¾Çé¿ö");
-		time = new JLabel("µÇ¼ÇÊ±¼ä");
+	private void inquire1() {// äºŒçº§é˜²ç–«éƒ¨é—¨
+		sno = new JLabel("å­¦å·");
+		Sdept = new JLabel("æ‰€å±éƒ¨é—¨");
+		suse = new JLabel("ç”µè¯");
+		es = new JLabel("æ„ŸæŸ“æƒ…å†µ");
+		time = new JLabel("ç™»è®°æ—¶é—´");
 		snoText = new JTextField(10);
 		SdeptText = new JTextField(10);
 		suseText = new JTextField(10);
 		esText = new JTextField(10);
 		timeText = new JTextField(10);
-		name = new JLabel("Ãû×Ö");
+		name = new JLabel("åå­—");
 		nameText = new JTextField(10);
 		suguan = new JPanel(new GridLayout(7, 2));
-		add = new JButton("Ìá½»");
+		add = new JButton("æäº¤");
 		add.addActionListener(this);
-		sno.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		name.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		Sdept.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		suse.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		es.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		time.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
+		sno.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		name.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		Sdept.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		suse.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		es.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		time.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
 		snoText.setBounds(0, 0, 240, 40);
 		nameText.setBounds(0, 0, 240, 40);
 		SdeptText.setBounds(0, 0, 240, 40);
@@ -352,28 +352,28 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 		suguan.add(add);
 	}
 
-	private void inquire2() {// ½ÌÖ°¹¤
-		sno = new JLabel("Ñ§ºÅ");
-		Sdept = new JLabel("ËùÊô²¿ÃÅ");
-		suse = new JLabel("µç»°");
-		es = new JLabel("¸ĞÈ¾Çé¿ö");
-		time = new JLabel("µÇ¼ÇÊ±¼ä");
+	private void inquire2() {// æ•™èŒå·¥
+		sno = new JLabel("å­¦å·");
+		Sdept = new JLabel("æ‰€å±éƒ¨é—¨");
+		suse = new JLabel("ç”µè¯");
+		es = new JLabel("æ„ŸæŸ“æƒ…å†µ");
+		time = new JLabel("ç™»è®°æ—¶é—´");
 		snoText = new JTextField(10);
 		SdeptText = new JTextField(10);
 		suseText = new JTextField(10);
 		esText = new JTextField(10);
 		timeText = new JTextField(10);
-		name = new JLabel("Ãû×Ö");
+		name = new JLabel("åå­—");
 		nameText = new JTextField(10);
 		suguan = new JPanel(new GridLayout(7, 2));
-		add = new JButton("Ìá½»");
+		add = new JButton("æäº¤");
 		add.addActionListener(this);
-		sno.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		name.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		Sdept.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		suse.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		es.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		time.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
+		sno.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		name.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		Sdept.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		suse.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		es.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		time.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
 		snoText.setBounds(0, 0, 240, 40);
 		nameText.setBounds(0, 0, 240, 40);
 		SdeptText.setBounds(0, 0, 240, 40);
@@ -396,42 +396,42 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 		suguan.add(add);
 	}
 
-	private void xiugai() {// ¶ş¼¶·ÀÒß²¿ÃÅ¸ºÔğÈË
-		sno = new JLabel("Ñ§ºÅ");
-		Sdept = new JLabel("ËùÊô²¿ÃÅ");
-		suse = new JLabel("µç»°");
-		es = new JLabel("¸ĞÈ¾Çé¿ö");
-		time = new JLabel("µÇ¼ÇÊ±¼ä");
+	private void xiugai() {// äºŒçº§é˜²ç–«éƒ¨é—¨è´Ÿè´£äºº
+		sno = new JLabel("å­¦å·");
+		Sdept = new JLabel("æ‰€å±éƒ¨é—¨");
+		suse = new JLabel("ç”µè¯");
+		es = new JLabel("æ„ŸæŸ“æƒ…å†µ");
+		time = new JLabel("ç™»è®°æ—¶é—´");
 		snoText = new JTextField(10);
 		SdeptText = new JTextField(10);
 		suseText = new JTextField(10);
 		esText = new JTextField(10);
 		timeText = new JTextField(10);
-		name = new JLabel("Ãû×Ö");
+		name = new JLabel("åå­—");
 		nameText = new JTextField(10);
 		suguan = new JPanel(new GridLayout(10, 2));
-		add = new JButton("Ôö¼Ó");
+		add = new JButton("å¢åŠ ");
 		add.addActionListener(this);
-		delete = new JButton("É¾³ı(¸üĞÂ)");
+		delete = new JButton("åˆ é™¤(æ›´æ–°)");
 		delete.addActionListener(this);
-		submit = new JButton("ĞŞ¸Ä");
+		submit = new JButton("ä¿®æ”¹");
 		submit.addActionListener(this);
-		dao = new JButton("Ñ§ºÅ×¼È·²éÑ¯");
+		dao = new JButton("å­¦å·å‡†ç¡®æŸ¥è¯¢");
 		dao.addActionListener(this);
-		dao1 = new JButton("ĞÕÃûÄ£ºı²éÑ¯");
+		dao1 = new JButton("å§“åæ¨¡ç³ŠæŸ¥è¯¢");
 		dao1.addActionListener(this);
-		dao2 = new JButton("Ê±¼ä×¼È·²éÑ¯");
+		dao2 = new JButton("æ—¶é—´å‡†ç¡®æŸ¥è¯¢");
 		dao2.addActionListener(this);
-		dao3 = new JButton("¸ĞÈ¾Çé¿ö²éÑ¯");
+		dao3 = new JButton("æ„ŸæŸ“æƒ…å†µæŸ¥è¯¢");
 		dao3.addActionListener(this);
-		jchart = new JButton("¸ĞÈ¾Çé¿öÍ³¼ÆÍ¼");
+		jchart = new JButton("æ„ŸæŸ“æƒ…å†µç»Ÿè®¡å›¾");
 		jchart.addActionListener(this);
-		sno.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		name.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		Sdept.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		suse.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		es.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		time.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
+		sno.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		name.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		Sdept.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		suse.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		es.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		time.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
 		snoText.setBounds(0, 0, 240, 40);
 		nameText.setBounds(0, 0, 240, 40);
 		SdeptText.setBounds(0, 0, 240, 40);
@@ -461,50 +461,50 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 		suguan.add(jchart);
 	}
 
-	private void xiugai1() {// ·À¿Ø°ì
-		sno = new JLabel("Ñ§ºÅ");
-		Sdept = new JLabel("ËùÊôµ¥Î»");
-		suse = new JLabel("µç»°");
-		es = new JLabel("¸ĞÈ¾Çé¿ö");
-		time = new JLabel("µÇ¼ÇÊ±¼ä");
+	private void xiugai1() {// é˜²æ§åŠ
+		sno = new JLabel("å­¦å·");
+		Sdept = new JLabel("æ‰€å±å•ä½");
+		suse = new JLabel("ç”µè¯");
+		es = new JLabel("æ„ŸæŸ“æƒ…å†µ");
+		time = new JLabel("ç™»è®°æ—¶é—´");
 		snoText = new JTextField(10);
 		SdeptText = new JTextField(10);
 		suseText = new JTextField(10);
 		esText = new JTextField(10);
 		timeText = new JTextField(10);
-		name = new JLabel("Ãû×Ö");
+		name = new JLabel("åå­—");
 		nameText = new JTextField(10);
 		suguan = new JPanel(new GridLayout(12, 2));
-		add = new JButton("Ôö¼Ó");
+		add = new JButton("å¢åŠ ");
 		add.addActionListener(this);
-		delete = new JButton("É¾³ı(¸üĞÂ)");
+		delete = new JButton("åˆ é™¤(æ›´æ–°)");
 		delete.addActionListener(this);
-		submit = new JButton("ĞŞ¸Ä");
+		submit = new JButton("ä¿®æ”¹");
 		submit.addActionListener(this);
-		dao = new JButton("Ñ§ºÅ×¼È·²éÑ¯");
+		dao = new JButton("å­¦å·å‡†ç¡®æŸ¥è¯¢");
 		dao.addActionListener(this);
-		dao1 = new JButton("ĞÕÃûÄ£ºı²éÑ¯");
+		dao1 = new JButton("å§“åæ¨¡ç³ŠæŸ¥è¯¢");
 		dao1.addActionListener(this);
-		dao2 = new JButton("Ê±¼ä×¼È·²éÑ¯");
+		dao2 = new JButton("æ—¶é—´å‡†ç¡®æŸ¥è¯¢");
 		dao2.addActionListener(this);
-		dao3 = new JButton("¸ĞÈ¾Çé¿ö²éÑ¯");
+		dao3 = new JButton("æ„ŸæŸ“æƒ…å†µæŸ¥è¯¢");
 		dao3.addActionListener(this);
-		jchart = new JButton("¸ĞÈ¾Çé¿öÍ³¼ÆÍ¼");
+		jchart = new JButton("æ„ŸæŸ“æƒ…å†µç»Ÿè®¡å›¾");
 		jchart.addActionListener(this);
-		dao4 = new JButton("²éÑ¯Ä³ÈËÄ³ÌìÇé¿ö");
+		dao4 = new JButton("æŸ¥è¯¢æŸäººæŸå¤©æƒ…å†µ");
 		dao4.addActionListener(this);
-		dao5 = new JButton("Ìî±¨Çé¿öÍ³¼ÆÍ¼");
+		dao5 = new JButton("å¡«æŠ¥æƒ…å†µç»Ÿè®¡å›¾");
 		dao5.addActionListener(this);
-		show = new JButton("Ñ§ÉúÍ³¼ÆĞÅÏ¢»ã×Ü");
+		show = new JButton("å­¦ç”Ÿç»Ÿè®¡ä¿¡æ¯æ±‡æ€»");
 		show.addActionListener(this);
-		show1 = new JButton("½ÌÖ°¹¤Í³¼ÆĞÅÏ¢»ã×Ü");
+		show1 = new JButton("æ•™èŒå·¥ç»Ÿè®¡ä¿¡æ¯æ±‡æ€»");
 		show1.addActionListener(this);
-		sno.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		name.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		Sdept.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		suse.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		es.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
-		time.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
+		sno.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		name.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		Sdept.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		suse.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		es.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
+		time.setFont(new Font("å®‹ä½“", Font.PLAIN, 18));
 		snoText.setBounds(0, 0, 240, 40);
 		nameText.setBounds(0, 0, 240, 40);
 		SdeptText.setBounds(0, 0, 240, 40);
@@ -540,64 +540,64 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// *** ¶ş¼¶·À¿Ø°ì¸ºÔğÈË²¿·Ö ***
-		if (e.getSource() == add && type == 3) {// Ôö¼Ó
-			JOptionPane.showMessageDialog(null, "²åÈëÒÑ³É¹¦£¡", "¾¯¸æ", JOptionPane.WARNING_MESSAGE);
+		// *** äºŒçº§é˜²æ§åŠè´Ÿè´£äººéƒ¨åˆ† ***
+		if (e.getSource() == add && type == 3) {// å¢åŠ 
+			JOptionPane.showMessageDialog(null, "æ’å…¥å·²æˆåŠŸï¼", "è­¦å‘Š", JOptionPane.WARNING_MESSAGE);
 			PreparedStatement statement = null;
 			try {
 				statement = connection.prepareStatement("insert into dbo.ES values(?,?,?,?,?,?,?)");
 			} catch (SQLException e1) {
-				System.out.println("²åÈëÊ§°Ü£¡\n");
+				System.out.println("æ’å…¥å¤±è´¥ï¼\n");
 				e1.printStackTrace();
 			}
 			try {
 				statement.setString(1, snoText.getText());
 			} catch (SQLException e2) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e2.printStackTrace();
 			}
 			try {
 				statement.setString(2, nameText.getText());
 			} catch (SQLException e3) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e3.printStackTrace();
 			}
 			try {
 				statement.setString(3, esText.getText());
 			} catch (SQLException e4) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e4.printStackTrace();
 			}
 			try {
 				statement.setString(4, SdeptText.getText());
 			} catch (SQLException e5) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e5.printStackTrace();
 			}
 			try {
 				statement.setString(5, suseText.getText());
 			} catch (SQLException e6) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e6.printStackTrace();
 			}
 			try {
 				statement.setString(6, timeText.getText());
 			} catch (SQLException e7) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e7.printStackTrace();
 			}
 			try {
 				int c = 2;
 				statement.setLong(7, c);
 			} catch (SQLException e7) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e7.printStackTrace();
 			}
 
 			try {
 				statement.executeUpdate();
 			} catch (SQLException e1) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e1.printStackTrace();
 			}
 			try {
@@ -606,7 +606,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				int n = 2;
 				state = connection.prepareStatement("select *from ES where Utype" + "=" + "'" + n + "'");
 				resultSet = state.executeQuery();
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -625,8 +625,8 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 			}
 
 		}
-		if (e.getSource() == delete && type == 3) {// É¾³ı
-			JOptionPane.showMessageDialog(null, "É¾³ıÒÑ³É¹¦£¡", "¾¯¸æ", JOptionPane.WARNING_MESSAGE);
+		if (e.getSource() == delete && type == 3) {// åˆ é™¤
+			JOptionPane.showMessageDialog(null, "åˆ é™¤å·²æˆåŠŸï¼", "è­¦å‘Š", JOptionPane.WARNING_MESSAGE);
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -641,7 +641,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				int n = 2;
 				state = connection.prepareStatement("select *from ES where Utype" + "=" + "'" + n + "'");
 				resultSet = state.executeQuery();
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -660,10 +660,10 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 			}
 		}
 
-		if (e.getSource() == submit && type == 3) {// ĞŞ¸Ä
+		if (e.getSource() == submit && type == 3) {// ä¿®æ”¹
 			try {
 				if (esText.getText().length() > 0 && SdeptText.getText().length() == 0
-						&& timeText.getText().length() > 0) {// Ö»ĞŞ¸Ä¸ĞÈ¾Çé¿ö
+						&& timeText.getText().length() > 0) {// åªä¿®æ”¹æ„ŸæŸ“æƒ…å†µ
 
 					Statement statement = connection.createStatement();
 					String sql = "update ES set Es=" + "'" + esText.getText() + "'" + "where Sno" + "=" + "'"
@@ -674,11 +674,11 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					int n = 2;
 					state = connection.prepareStatement("select *from ES where Utype" + "=" + "'" + n + "'");
 					resultSet = state.executeQuery();
-					while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+					while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 						// System.out.println(model.getRowCount());
 						mm.removeRow(mm.getRowCount() - 1);
 					}
-					while (resultSet.next()) {// °Ñ¸üĞÂºóµÄÊı¾İÖØĞÂÏÔÊ¾µ½±í¸ñÖĞ£¬ÏÂÍ¬
+					while (resultSet.next()) {// æŠŠæ›´æ–°åçš„æ•°æ®é‡æ–°æ˜¾ç¤ºåˆ°è¡¨æ ¼ä¸­ï¼Œä¸‹åŒ
 						String Sno = resultSet.getString(1);
 						String Sname = resultSet.getString(2);
 						String Ssex = resultSet.getString(3);
@@ -690,7 +690,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					}
 				}
 				if (esText.getText().length() == 0 && SdeptText.getText().length() > 0
-						&& timeText.getText().length() > 0) {// Ö»ĞŞ¸ÄËùÔÚÊ¡·İ
+						&& timeText.getText().length() > 0) {// åªä¿®æ”¹æ‰€åœ¨çœä»½
 					Statement statement = connection.createStatement();
 					String sql = "update ES set Province=" + "'" + SdeptText.getText() + "'" + "where Sno" + "=" + "'"
 							+ snoText.getText() + "'" + "and Scheckin=" + "'" + timeText.getText() + "'";
@@ -700,7 +700,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					int n = 2;
 					state = connection.prepareStatement("select *from ES where Utype" + "=" + "'" + n + "'");
 					resultSet = state.executeQuery();
-					while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+					while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 						// System.out.println(model.getRowCount());
 						mm.removeRow(mm.getRowCount() - 1);
 					}
@@ -716,7 +716,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					}
 				}
 				if (esText.getText().length() > 0 && SdeptText.getText().length() > 0
-						&& timeText.getText().length() > 0) {// Í¬Ê±ĞŞ¸Ä
+						&& timeText.getText().length() > 0) {// åŒæ—¶ä¿®æ”¹
 					Statement statement = connection.createStatement();
 					String sql = "update ES set Province=" + "'" + SdeptText.getText() + "'" + ", Es=" + "'"
 							+ esText.getText() + "'" + "where Sno" + "=" + "'" + snoText.getText() + "'"
@@ -727,7 +727,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					int n = 2;
 					state = connection.prepareStatement("select *from ES where Utype" + "=" + "'" + n + "'");
 					resultSet = state.executeQuery();
-					while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+					while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 						// System.out.println(model.getRowCount());
 						mm.removeRow(mm.getRowCount() - 1);
 					}
@@ -746,7 +746,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == dao && type == 3) {// ¸ù¾İÑ§ºÅ½øĞĞ×¼È·²éÑ¯
+		if (e.getSource() == dao && type == 3) {// æ ¹æ®å­¦å·è¿›è¡Œå‡†ç¡®æŸ¥è¯¢
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -754,7 +754,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				String sql = "select *from ES where Sno =" + "'" + snoText.getText() + "'";
 				ResultSet resultSet;
 				resultSet = statement.executeQuery(sql);
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -772,7 +772,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == dao1 && type == 3) {// ĞÕÃû½øĞĞÄ£ºı²éÑ¯
+		if (e.getSource() == dao1 && type == 3) {// å§“åè¿›è¡Œæ¨¡ç³ŠæŸ¥è¯¢
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -782,7 +782,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 						+ n + "'";
 				ResultSet resultSet;
 				resultSet = statement.executeQuery(sql);
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -800,7 +800,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == dao2 && type == 3) {// Ê±¼ä×¼È·²éÑ¯
+		if (e.getSource() == dao2 && type == 3) {// æ—¶é—´å‡†ç¡®æŸ¥è¯¢
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -810,7 +810,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 						+ "'" + n + "'";
 				ResultSet resultSet;
 				resultSet = statement.executeQuery(sql);
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -828,7 +828,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == dao3 && type == 3) {// ¸ĞÈ¾²éÑ¯
+		if (e.getSource() == dao3 && type == 3) {// æ„ŸæŸ“æŸ¥è¯¢
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -838,7 +838,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 						+ "'";
 				ResultSet resultSet;
 				resultSet = statement.executeQuery(sql);
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -858,7 +858,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == jchart && type == 3) {// Éú³ÉÍ³¼ÆÍ¼
+		if (e.getSource() == jchart && type == 3) {// ç”Ÿæˆç»Ÿè®¡å›¾
 			a1 = 0;
 			a2 = 0;
 			x = 1;
@@ -877,15 +877,15 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					String DDno = resultSet.getString(5);
 					String Scheckin = resultSet.getString(6);
 					System.out.println(Sno + "," + Sname + "," + Ssex + "," + Sdept + "," + DDno + "," + Scheckin);
-					if (Ssex.equals("ÓĞ")) {
+					if (Ssex.equals("æœ‰")) {
 						a1++;
-					} else if (Ssex.equals("ÎŞ")) {
+					} else if (Ssex.equals("æ— ")) {
 						a2++;
 					}
 				}
-				JFrame frame = new JFrame("¸ĞÈ¾ÈËÊıÍ³¼ÆÍ¼");
+				JFrame frame = new JFrame("æ„ŸæŸ“äººæ•°ç»Ÿè®¡å›¾");
 				frame.setLayout(new GridLayout(1, 1, 5, 5));
-				frame.add(new DormitoryInfo().getChartPanel()); // Ìí¼ÓÖùĞÎÍ¼
+				frame.add(new DormitoryInfo().getChartPanel()); // æ·»åŠ æŸ±å½¢å›¾
 				frame.setBounds(0, 0, 500, 600);
 				frame.setVisible(true);
 
@@ -893,64 +893,64 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		//////////////////////////////////////////////
-		if (e.getSource() == add && type == 4) {// Ôö¼Ó
-			String a = JOptionPane.showInputDialog("ÇëÊäÈëÄúÒª²åÈëµÄÈËÔ±ÀàĞÍ£¨1Ñ§Éú2Ñ§Ğ£¶ş¼¶·ÀÒß²¿ÃÅ³ÉÔ±3Ñ§Ğ£¶ş¼¶·ÀÒß²¿ÃÅ¸ºÔğÈË4Ñ§Ğ£·À¿Ø°ì£©:");
-			JOptionPane.showMessageDialog(null, "²åÈëÒÑ³É¹¦£¡", "¾¯¸æ", JOptionPane.WARNING_MESSAGE);
+		
+		if (e.getSource() == add && type == 4) {// å¢åŠ 
+			String a = JOptionPane.showInputDialog("è¯·è¾“å…¥æ‚¨è¦æ’å…¥çš„äººå‘˜ç±»å‹ï¼ˆ1å­¦ç”Ÿ2å­¦æ ¡äºŒçº§é˜²ç–«éƒ¨é—¨æˆå‘˜3å­¦æ ¡äºŒçº§é˜²ç–«éƒ¨é—¨è´Ÿè´£äºº4å­¦æ ¡é˜²æ§åŠï¼‰:");
+			JOptionPane.showMessageDialog(null, "æ’å…¥å·²æˆåŠŸï¼", "è­¦å‘Š", JOptionPane.WARNING_MESSAGE);
 			PreparedStatement statement = null;
 			try {
 				statement = connection.prepareStatement("insert into dbo.ES values(?,?,?,?,?,?,?)");
 			} catch (SQLException e1) {
-				System.out.println("²åÈëÊ§°Ü£¡\n");
+				System.out.println("æ’å…¥å¤±è´¥ï¼\n");
 				e1.printStackTrace();
 			}
 			try {
 				statement.setString(1, snoText.getText());
 			} catch (SQLException e2) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e2.printStackTrace();
 			}
 			try {
 				statement.setString(2, nameText.getText());
 			} catch (SQLException e3) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e3.printStackTrace();
 			}
 			try {
 				statement.setString(3, esText.getText());
 			} catch (SQLException e4) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e4.printStackTrace();
 			}
 			try {
 				statement.setString(4, SdeptText.getText());
 			} catch (SQLException e5) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e5.printStackTrace();
 			}
 			try {
 				statement.setString(5, suseText.getText());
 			} catch (SQLException e6) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e6.printStackTrace();
 			}
 			try {
 				statement.setString(6, timeText.getText());
 			} catch (SQLException e7) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e7.printStackTrace();
 			}
 			try {
 				statement.setString(7, a);
 			} catch (SQLException e7) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e7.printStackTrace();
 			}
 
 			try {
 				statement.executeUpdate();
 			} catch (SQLException e1) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e1.printStackTrace();
 			}
 			try {
@@ -958,7 +958,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				ResultSet resultSet;
 				state = connection.prepareStatement("select *from ES");
 				resultSet = state.executeQuery();
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -977,8 +977,8 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 			}
 
 		}
-		if (e.getSource() == delete && type == 4) {// É¾³ı
-			JOptionPane.showMessageDialog(null, "É¾³ıÒÑ³É¹¦£¡", "¾¯¸æ", JOptionPane.WARNING_MESSAGE);
+		if (e.getSource() == delete && type == 4) {// åˆ é™¤
+			JOptionPane.showMessageDialog(null, "åˆ é™¤å·²æˆåŠŸï¼", "è­¦å‘Š", JOptionPane.WARNING_MESSAGE);
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -992,7 +992,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				ResultSet resultSet;
 				state = connection.prepareStatement("select *from ES");
 				resultSet = state.executeQuery();
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -1011,10 +1011,10 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 			}
 		}
 
-		if (e.getSource() == submit && type == 4) {// ĞŞ¸Ä
+		if (e.getSource() == submit && type == 4) {// ä¿®æ”¹
 			try {
 				if (esText.getText().length() > 0 && SdeptText.getText().length() == 0
-						&& timeText.getText().length() > 0) {// Ö»ĞŞ¸Ä¸ĞÈ¾Çé¿ö
+						&& timeText.getText().length() > 0) {// åªä¿®æ”¹æ„ŸæŸ“æƒ…å†µ
 
 					Statement statement = connection.createStatement();
 					String sql = "update ES set Es=" + "'" + esText.getText() + "'" + "where Sno" + "=" + "'"
@@ -1024,11 +1024,11 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					ResultSet resultSet;
 					state = connection.prepareStatement("select *from ES");
 					resultSet = state.executeQuery();
-					while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+					while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 						// System.out.println(model.getRowCount());
 						mm.removeRow(mm.getRowCount() - 1);
 					}
-					while (resultSet.next()) {// °Ñ¸üĞÂºóµÄÊı¾İÖØĞÂÏÔÊ¾µ½±í¸ñÖĞ£¬ÏÂÍ¬
+					while (resultSet.next()) {// æŠŠæ›´æ–°åçš„æ•°æ®é‡æ–°æ˜¾ç¤ºåˆ°è¡¨æ ¼ä¸­ï¼Œä¸‹åŒ
 						String Sno = resultSet.getString(1);
 						String Sname = resultSet.getString(2);
 						String Ssex = resultSet.getString(3);
@@ -1040,7 +1040,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					}
 				}
 				if (esText.getText().length() == 0 && SdeptText.getText().length() > 0
-						&& timeText.getText().length() > 0) {// Ö»ĞŞ¸ÄËùÔÚÊ¡·İ
+						&& timeText.getText().length() > 0) {// åªä¿®æ”¹æ‰€åœ¨çœä»½
 					Statement statement = connection.createStatement();
 					String sql = "update ES set Province=" + "'" + SdeptText.getText() + "'" + "where Sno" + "=" + "'"
 							+ snoText.getText() + "'" + "and Scheckin=" + "'" + timeText.getText() + "'";
@@ -1049,7 +1049,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					ResultSet resultSet;
 					state = connection.prepareStatement("select *from ES");
 					resultSet = state.executeQuery();
-					while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+					while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 						// System.out.println(model.getRowCount());
 						mm.removeRow(mm.getRowCount() - 1);
 					}
@@ -1065,7 +1065,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					}
 				}
 				if (esText.getText().length() > 0 && SdeptText.getText().length() > 0
-						&& timeText.getText().length() > 0) {// Í¬Ê±ĞŞ¸Ä
+						&& timeText.getText().length() > 0) {// åŒæ—¶ä¿®æ”¹
 					Statement statement = connection.createStatement();
 					String sql = "update ES set Province=" + "'" + SdeptText.getText() + "'" + ", Es=" + "'"
 							+ esText.getText() + "'" + "where Sno" + "=" + "'" + snoText.getText() + "'"
@@ -1075,7 +1075,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					ResultSet resultSet;
 					state = connection.prepareStatement("select *from ES");
 					resultSet = state.executeQuery();
-					while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+					while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 						// System.out.println(model.getRowCount());
 						mm.removeRow(mm.getRowCount() - 1);
 					}
@@ -1094,7 +1094,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == dao && type == 4) {// ¸ù¾İÑ§ºÅ½øĞĞ×¼È·²éÑ¯
+		if (e.getSource() == dao && type == 4) {// æ ¹æ®å­¦å·è¿›è¡Œå‡†ç¡®æŸ¥è¯¢
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -1102,7 +1102,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				String sql = "select *from ES where Sno =" + "'" + snoText.getText() + "'";
 				ResultSet resultSet;
 				resultSet = statement.executeQuery(sql);
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -1120,7 +1120,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == dao1 && type == 4) {// ĞÕÃû½øĞĞÄ£ºı²éÑ¯
+		if (e.getSource() == dao1 && type == 4) {// å§“åè¿›è¡Œæ¨¡ç³ŠæŸ¥è¯¢
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -1128,7 +1128,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				String sql = "select *from ES where Sname like'%" + nameText.getText() + "%'";
 				ResultSet resultSet;
 				resultSet = statement.executeQuery(sql);
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -1146,7 +1146,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == dao2 && type == 4) {// Ê±¼ä×¼È·²éÑ¯
+		if (e.getSource() == dao2 && type == 4) {// æ—¶é—´å‡†ç¡®æŸ¥è¯¢
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -1154,7 +1154,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				String sql = "select *from ES where Scheckin =" + "'" + timeText.getText() + "'";
 				ResultSet resultSet;
 				resultSet = statement.executeQuery(sql);
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -1172,7 +1172,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == dao3 && type == 4) {// ¸ĞÈ¾²éÑ¯
+		if (e.getSource() == dao3 && type == 4) {// æ„ŸæŸ“æŸ¥è¯¢
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -1180,7 +1180,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				String sql = "select *from ES where Es =" + "'" + esText.getText() + "'";
 				ResultSet resultSet;
 				resultSet = statement.executeQuery(sql);
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -1200,7 +1200,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == dao4 && type == 4) {// Ä³ÈËÄ³ÌìÇé¿ö²éÑ¯
+		if (e.getSource() == dao4 && type == 4) {// æŸäººæŸå¤©æƒ…å†µæŸ¥è¯¢
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -1209,7 +1209,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 						+ snoText.getText() + "'";
 				ResultSet resultSet;
 				resultSet = statement.executeQuery(sql);
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -1229,7 +1229,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == jchart && type == 4) {// Éú³ÉÍ³¼ÆÍ¼
+		if (e.getSource() == jchart && type == 4) {// ç”Ÿæˆç»Ÿè®¡å›¾
 			a1 = 0;
 			a2 = 0;
 			x = 1;
@@ -1247,15 +1247,15 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					String DDno = resultSet.getString(5);
 					String Scheckin = resultSet.getString(6);
 					System.out.println(Sno + "," + Sname + "," + Ssex + "," + Sdept + "," + DDno + "," + Scheckin);
-					if (Ssex.equals("ÓĞ")) {
+					if (Ssex.equals("æœ‰")) {
 						a1++;
-					} else if (Ssex.equals("ÎŞ")) {
+					} else if (Ssex.equals("æ— ")) {
 						a2++;
 					}
 				}
-				JFrame frame = new JFrame("¸ĞÈ¾ÈËÊıÍ³¼ÆÍ¼");
+				JFrame frame = new JFrame("æ„ŸæŸ“äººæ•°ç»Ÿè®¡å›¾");
 				frame.setLayout(new GridLayout(1, 1, 5, 5));
-				frame.add(new DormitoryInfo().getChartPanel()); // Ìí¼ÓÖùĞÎÍ¼
+				frame.add(new DormitoryInfo().getChartPanel()); // æ·»åŠ æŸ±å½¢å›¾
 				frame.setBounds(0, 0, 500, 600);
 				frame.setVisible(true);
 
@@ -1263,9 +1263,9 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == dao5 && type == 4) {// Éú³ÉÍ³¼ÆÍ¼1
+		if (e.getSource() == dao5 && type == 4) {// ç”Ÿæˆç»Ÿè®¡å›¾1
 			a1 = 0;
-			String a = JOptionPane.showInputDialog("ÇëÊäÈë¸ÃÑ§ÔºµÄ×ÜÈËÊı:");
+			String a = JOptionPane.showInputDialog("è¯·è¾“å…¥è¯¥å­¦é™¢çš„æ€»äººæ•°:");
 			a2 = Integer.parseInt(a);
 
 			x = 2;
@@ -1294,31 +1294,44 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 					a1++;
 				}
 
-				if (list != null && list.size() > 0) {// Èç¹ûlistÖĞ´æÈëÁËÊı¾İ£¬×ª»¯ÎªÊı×é
-					data0 = new String[list.size()];// ´´½¨Ò»¸öºÍlist³¤¶ÈÒ»ÑùµÄÊı×é
+				if (list != null && list.size() > 0) {// å¦‚æœlistä¸­å­˜å…¥äº†æ•°æ®ï¼Œè½¬åŒ–ä¸ºæ•°ç»„
+					data0 = new String[list.size()];// åˆ›å»ºä¸€ä¸ªå’Œlisté•¿åº¦ä¸€æ ·çš„æ•°ç»„
 					for (int i = 0; i < list.size(); i++) {
-						data0[i] = list.get(i);// Êı×é
+						data0[i] = list.get(i);// æ•°ç»„
 					}
 				}
 
-				JFrame frame = new JFrame("ÌîĞ´ÈËÊıÍ³¼ÆÍ¼");
+				JFrame frame = new JFrame("å¡«å†™äººæ•°ç»Ÿè®¡å›¾");
 				frame.setLayout(new GridLayout(1, 1, 5, 5));
-				frame.add(new DormitoryInfo().getChartPanel()); // Ìí¼ÓÖùĞÎÍ¼
+				frame.add(new DormitoryInfo().getChartPanel()); // æ·»åŠ æŸ±å½¢å›¾
 				frame.setBounds(0, 0, 500, 600);
 				frame.setVisible(true);
-				String b = JOptionPane.showInputDialog("ÇëÊäÈëÊÇ·ñµ¼³öexcel:");
-				if (b.equals("ÊÇ")) {
+				String b = JOptionPane.showInputDialog("è¯·è¾“å…¥æ˜¯å¦å¯¼å‡ºexcel:");
+				if (b.equals("æ˜¯")) {
 					try {
-						// ´ò¿ªÎÄ¼ş
+						// æ‰“å¼€æ–‡ä»¶
 						WritableWorkbook book = Workbook.createWorkbook(new File("C:\\Users\\ASUS\\Desktop\\x.xls"));
-						// Éú³ÉÃûÎª¡°µÚÒ»Ò³¡±µÄ¹¤×÷±í£¬²ÎÊı0±íÊ¾ÕâÊÇµÚÒ»Ò³
-						WritableSheet sheet = book.createSheet("µÚÒ»Ò³", 0);
+						// ç”Ÿæˆåä¸ºâ€œç¬¬ä¸€é¡µâ€çš„å·¥ä½œè¡¨ï¼Œå‚æ•°0è¡¨ç¤ºè¿™æ˜¯ç¬¬ä¸€é¡µ
+						WritableSheet sheet = book.createSheet("ç¬¬ä¸€é¡µ", 0);
+						Label label1 = new Label(0, 0, "å­¦å·");// å¯¹åº”ä¸ºç¬¬1åˆ—ç¬¬1è¡Œçš„æ•°æ®
+						Label label2 = new Label(1, 0, "å§“å");// å¯¹åº”ä¸ºç¬¬2åˆ—ç¬¬1è¡Œçš„æ•°æ®
+						Label label3 = new Label(2, 0, "æœ‰æ— æ„ŸæŸ“");// å¯¹åº”ä¸ºç¬¬3åˆ—ç¬¬1è¡Œçš„æ•°æ®
+						Label label4 = new Label(3, 0, "å­¦é™¢");// å¯¹åº”ä¸ºç¬¬4åˆ—ç¬¬1è¡Œçš„æ•°æ®
+						Label label5 = new Label(4, 0, "è”ç³»ç”µè¯");// å¯¹åº”ä¸ºç¬¬5åˆ—ç¬¬1è¡Œçš„æ•°æ®
+						Label label6 = new Label(5, 0, "ç™»è®°æ—¶é—´");// å¯¹åº”ä¸ºç¬¬6åˆ—ç¬¬1è¡Œçš„æ•°æ®
+						// æ·»åŠ å•å…ƒæ ¼åˆ°é€‰é¡¹å¡ä¸­
+						sheet.addCell(label1);
+						sheet.addCell(label2);
+						sheet.addCell(label3);
+						sheet.addCell(label4);
+						sheet.addCell(label5);
+						sheet.addCell(label6);
 						System.out.println((data0.length) / 6);
 						for (int i = 0; i < data0.length; i++) {
-							Label label = new Label(i, 0, data0[i]);
+							Label label = new Label(i, 1, data0[i]);
 							sheet.addCell(label);
 						}
-						// Ğ´ÈëÊı¾İ²¢¹Ø±ÕÎÄ¼ş
+						// å†™å…¥æ•°æ®å¹¶å…³é—­æ–‡ä»¶
 						book.write();
 						book.close();
 					} catch (Exception e1) {
@@ -1329,7 +1342,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == show && type == 4) {// Ñ§ÉúÍ³¼ÆĞÅÏ¢»ã×Ü
+		if (e.getSource() == show && type == 4) {// å­¦ç”Ÿç»Ÿè®¡ä¿¡æ¯æ±‡æ€»
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -1337,7 +1350,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				String sql = "select *from ES where Utype =" + "'" + z + "'";
 				ResultSet resultSet;
 				resultSet = statement.executeQuery(sql);
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -1356,7 +1369,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if (e.getSource() == show1 && type == 4) {// ½ÌÖ°¹¤Í³¼ÆĞÅÏ¢»ã×Ü
+		if (e.getSource() == show1 && type == 4) {// æ•™èŒå·¥ç»Ÿè®¡ä¿¡æ¯æ±‡æ€»
 			Statement statement;
 			try {
 				statement = connection.createStatement();
@@ -1364,7 +1377,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				String sql = "select *from ES where Utype =" + "'" + z + "'";
 				ResultSet resultSet;
 				resultSet = statement.executeQuery(sql);
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -1383,64 +1396,64 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		// ***Ñ§Éú***
-		if (e.getSource() == add && type == 1) {// Ñ§Éú
-			JOptionPane.showMessageDialog(null, "²åÈëÒÑ³É¹¦£¡", "¾¯¸æ", JOptionPane.WARNING_MESSAGE);
+		// ***å­¦ç”Ÿ***
+		if (e.getSource() == add && type == 1) {// å­¦ç”Ÿ
+			JOptionPane.showMessageDialog(null, "æ’å…¥å·²æˆåŠŸï¼", "è­¦å‘Š", JOptionPane.WARNING_MESSAGE);
 			PreparedStatement statement = null;
 			try {
 				statement = connection.prepareStatement("insert into dbo.ES values(?,?,?,?,?,?,?)");
 			} catch (SQLException e1) {
-				System.out.println("²åÈëÊ§°Ü£¡\n");
+				System.out.println("æ’å…¥å¤±è´¥ï¼\n");
 				e1.printStackTrace();
 			}
 			try {
 				statement.setString(1, snoText.getText());
 			} catch (SQLException e2) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e2.printStackTrace();
 			}
 			try {
 				statement.setString(2, nameText.getText());
 			} catch (SQLException e3) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e3.printStackTrace();
 			}
 			try {
 				statement.setString(3, esText.getText());
 			} catch (SQLException e4) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e4.printStackTrace();
 			}
 			try {
 				statement.setString(4, SdeptText.getText());
 			} catch (SQLException e5) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e5.printStackTrace();
 			}
 			try {
 				statement.setString(5, suseText.getText());
 			} catch (SQLException e6) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e6.printStackTrace();
 			}
 			try {
 				statement.setString(6, timeText.getText());
 			} catch (SQLException e7) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e7.printStackTrace();
 			}
 			try {
 				int c = 1;
 				statement.setLong(7, c);
 			} catch (SQLException e7) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e7.printStackTrace();
 			}
 
 			try {
 				statement.executeUpdate();
 			} catch (SQLException e1) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e1.printStackTrace();
 			}
 			try {
@@ -1449,7 +1462,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				state = connection
 						.prepareStatement("select *from ES " + "where Sname" + "=" + "'" + users.getName() + "'");
 				resultSet = state.executeQuery();
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -1467,64 +1480,64 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		// ***¶ş¼¶·ÀÒß²¿ÃÅ***
-		if (e.getSource() == add && type == 2) {// ¶ş¼¶·ÀÒß²¿ÃÅ
-			JOptionPane.showMessageDialog(null, "²åÈëÒÑ³É¹¦£¡", "¾¯¸æ", JOptionPane.WARNING_MESSAGE);
+		// ***äºŒçº§é˜²ç–«éƒ¨é—¨***
+		if (e.getSource() == add && type == 2) {// äºŒçº§é˜²ç–«éƒ¨é—¨
+			JOptionPane.showMessageDialog(null, "æ’å…¥å·²æˆåŠŸï¼", "è­¦å‘Š", JOptionPane.WARNING_MESSAGE);
 			PreparedStatement statement = null;
 			try {
 				statement = connection.prepareStatement("insert into dbo.ES values(?,?,?,?,?,?,?)");
 			} catch (SQLException e1) {
-				System.out.println("²åÈëÊ§°Ü£¡\n");
+				System.out.println("æ’å…¥å¤±è´¥ï¼\n");
 				e1.printStackTrace();
 			}
 			try {
 				statement.setString(1, snoText.getText());
 			} catch (SQLException e2) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e2.printStackTrace();
 			}
 			try {
 				statement.setString(2, nameText.getText());
 			} catch (SQLException e3) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e3.printStackTrace();
 			}
 			try {
 				statement.setString(3, esText.getText());
 			} catch (SQLException e4) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e4.printStackTrace();
 			}
 			try {
 				statement.setString(4, SdeptText.getText());
 			} catch (SQLException e5) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e5.printStackTrace();
 			}
 			try {
 				statement.setString(5, suseText.getText());
 			} catch (SQLException e6) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e6.printStackTrace();
 			}
 			try {
 				statement.setString(6, timeText.getText());
 			} catch (SQLException e7) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e7.printStackTrace();
 			}
 			try {
 				int c = 2;
 				statement.setLong(7, c);
 			} catch (SQLException e7) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e7.printStackTrace();
 			}
 
 			try {
 				statement.executeUpdate();
 			} catch (SQLException e1) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e1.printStackTrace();
 			}
 			try {
@@ -1533,7 +1546,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				state = connection
 						.prepareStatement("select *from ES " + "where Sname" + "=" + "'" + users.getName() + "'");
 				resultSet = state.executeQuery();
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
@@ -1551,64 +1564,64 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		// *** ½ÌÖ°¹¤ ***
-		if (e.getSource() == add && type == 5) {// ½ÌÖ°¹¤
-			JOptionPane.showMessageDialog(null, "²åÈëÒÑ³É¹¦£¡", "¾¯¸æ", JOptionPane.WARNING_MESSAGE);
+		// *** æ•™èŒå·¥ ***
+		if (e.getSource() == add && type == 5) {// æ•™èŒå·¥
+			JOptionPane.showMessageDialog(null, "æ’å…¥å·²æˆåŠŸï¼", "è­¦å‘Š", JOptionPane.WARNING_MESSAGE);
 			PreparedStatement statement = null;
 			try {
 				statement = connection.prepareStatement("insert into dbo.ES values(?,?,?,?,?,?,?)");
 			} catch (SQLException e1) {
-				System.out.println("²åÈëÊ§°Ü£¡\n");
+				System.out.println("æ’å…¥å¤±è´¥ï¼\n");
 				e1.printStackTrace();
 			}
 			try {
 				statement.setString(1, snoText.getText());
 			} catch (SQLException e2) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e2.printStackTrace();
 			}
 			try {
 				statement.setString(2, nameText.getText());
 			} catch (SQLException e3) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e3.printStackTrace();
 			}
 			try {
 				statement.setString(3, esText.getText());
 			} catch (SQLException e4) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e4.printStackTrace();
 			}
 			try {
 				statement.setString(4, SdeptText.getText());
 			} catch (SQLException e5) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e5.printStackTrace();
 			}
 			try {
 				statement.setString(5, suseText.getText());
 			} catch (SQLException e6) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e6.printStackTrace();
 			}
 			try {
 				statement.setString(6, timeText.getText());
 			} catch (SQLException e7) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e7.printStackTrace();
 			}
 			try {
 				int c = 2;
 				statement.setLong(7, c);
 			} catch (SQLException e7) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e7.printStackTrace();
 			}
 
 			try {
 				statement.executeUpdate();
 			} catch (SQLException e1) {
-				System.out.println("Ê§°Ü£¡\n");
+				System.out.println("å¤±è´¥ï¼\n");
 				e1.printStackTrace();
 			}
 			try {
@@ -1617,7 +1630,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				state = connection
 						.prepareStatement("select *from ES " + "where Sname" + "=" + "'" + users.getName() + "'");
 				resultSet = state.executeQuery();
-				while (mm.getRowCount() > 0) {// °Ñ±í¸ñ½øĞĞË¢ĞÂ£¬ÏÂ´ÎÏÔÊ¾µÄÊ±ºòÖØÍ·¿ªÊ¼ÏÔÊ¾
+				while (mm.getRowCount() > 0) {// æŠŠè¡¨æ ¼è¿›è¡Œåˆ·æ–°ï¼Œä¸‹æ¬¡æ˜¾ç¤ºçš„æ—¶å€™é‡å¤´å¼€å§‹æ˜¾ç¤º
 					// System.out.println(model.getRowCount());
 					mm.removeRow(mm.getRowCount() - 1);
 				}
