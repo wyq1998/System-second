@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -29,10 +31,13 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 import jxl.Workbook;
 import jxl.write.Label;
@@ -40,13 +45,13 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
 /**
- * 信息(学生)
+ * 宿舍信息(学生)
  */
 public class DormitoryInfo extends JPanel implements ActionListener {
 	Connection connection = new GetConnection().GetConnection();
 	Users users;// 当前用户
 	int type;// 用户类型
-	String Phone = "";// 电话号
+	String Phone = "";// 宿舍号
 	JTable table = new JTable();
 	String[] col = { "学号", "姓名", "有无感染", "学院", "联系电话", "登记时间" };
 	DefaultTableModel mm = new DefaultTableModel(col, 0); // 定义一个表的模板
@@ -62,12 +67,14 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 	JPanel suguan;
 
 	static ChartPanel frame1;
+	static ChartPanel frame2;
 	static int a1, a2;
 	static int x;// 判断生成那项数据的统计图
 	static JFreeChart chart;
 	static String[] data0;
 
 	private DormitoryInfo() {
+
 		if (x == 1) {
 			CategoryDataset dataset = getDataSet();// 将获得的数据传递给CategoryDataset类的对象
 			chart = ChartFactory.createBarChart3D("感染人数统计", // 图表标题
@@ -103,6 +110,27 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 
 		frame1 = new ChartPanel(chart, true); // 这里也可以用chartFrame,可以直接生成一个独立的Frame
 
+		DefaultPieDataset data = getDataSet2();
+		JFreeChart chart = ChartFactory.createPieChart3D("感染与未感染比例", data, true, false, false);
+		// 设置百分比
+		PiePlot pieplot = (PiePlot) chart.getPlot();
+		DecimalFormat df = new DecimalFormat("0.00%");// 获得一个DecimalFormat对象，主要是设置小数问题
+		NumberFormat nf = NumberFormat.getNumberInstance();// 获得一个NumberFormat对象
+		StandardPieSectionLabelGenerator sp1 = new StandardPieSectionLabelGenerator("{0}  {2}", nf, df);// 获得StandardPieSectionLabelGenerator对象
+		pieplot.setLabelGenerator(sp1);// 设置饼图显示百分比
+
+		// 没有数据的时候显示的内容
+		pieplot.setNoDataMessage("无数据显示");
+		pieplot.setCircular(false);
+		pieplot.setLabelGap(0.02D);
+
+		pieplot.setIgnoreNullValues(true);// 设置不显示空值
+		pieplot.setIgnoreZeroValues(true);// 设置不显示负值
+		frame2 = new ChartPanel(chart, true);
+		chart.getTitle().setFont(new Font("宋体", Font.BOLD, 20));// 设置标题字体
+		PiePlot piePlot = (PiePlot) chart.getPlot();// 获取图表区域对象
+		piePlot.setLabelFont(new Font("宋体", Font.BOLD, 10));// 解决乱码
+		chart.getLegend().setItemFont(new Font("黑体", Font.BOLD, 10));
 	}
 
 	private static CategoryDataset getDataSet() {
@@ -119,8 +147,20 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 		return dataset;
 	}
 
+	private static DefaultPieDataset getDataSet2() {
+		DefaultPieDataset dataset = new DefaultPieDataset();
+		dataset.setValue("感染", a1);
+		dataset.setValue("未感染", a2);
+		return dataset;
+	}
+
 	public ChartPanel getChartPanel() {
 		return frame1;
+
+	}
+
+	public ChartPanel getChartPanel1() {
+		return frame2;
 
 	}
 
@@ -888,12 +928,10 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				frame.add(new DormitoryInfo().getChartPanel()); // 添加柱形图
 				frame.setBounds(0, 0, 500, 600);
 				frame.setVisible(true);
-
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
-		
 		if (e.getSource() == add && type == 4) {// 增加
 			String a = JOptionPane.showInputDialog("请输入您要插入的人员类型（1学生2学校二级防疫部门成员3学校二级防疫部门负责人4学校防控办）:");
 			JOptionPane.showMessageDialog(null, "插入已成功！", "警告", JOptionPane.WARNING_MESSAGE);
@@ -1258,6 +1296,13 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				frame.add(new DormitoryInfo().getChartPanel()); // 添加柱形图
 				frame.setBounds(0, 0, 500, 600);
 				frame.setVisible(true);
+				String a = JOptionPane.showInputDialog("是否生成相应的饼状图:");
+				if (a.equals("是")) {
+					JFrame frame1 = new JFrame("饼状图");
+					frame1.add(new DormitoryInfo().getChartPanel1()); // 添加柱形图
+					frame1.setBounds(0, 0, 500, 600);
+					frame1.setVisible(true);
+				}
 
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1310,7 +1355,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				if (b.equals("是")) {
 					try {
 						// 打开文件
-						WritableWorkbook book = Workbook.createWorkbook(new File("C:\\Users\\ASUS\\Desktop\\x.xls"));
+						WritableWorkbook book = Workbook.createWorkbook(new File("C:\\\\Users\\\\ASUS\\\\Desktop\\\\x.xls"));
 						// 生成名为“第一页”的工作表，参数0表示这是第一页
 						WritableSheet sheet = book.createSheet("第一页", 0);
 						Label label1 = new Label(0, 0, "学号");// 对应为第1列第1行的数据
@@ -1328,7 +1373,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 						sheet.addCell(label6);
 						System.out.println((data0.length) / 6);
 						for (int i = 0; i < data0.length; i++) {
-							Label label = new Label(i, 1, data0[i]);
+							Label label = new Label(i, 0, data0[i]);
 							sheet.addCell(label);
 						}
 						// 写入数据并关闭文件
