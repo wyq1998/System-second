@@ -1356,7 +1356,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				if (b.equals("是")) {
 					try {
 						// 打开文件
-WritableWorkbook book = Workbook.createWorkbook(new File("C:\\\\Users\\\\ASUS\\\\Desktop\\\\x.xls"));
+                                                WritableWorkbook book = Workbook.createWorkbook(new File("C:\\\\Users\\\\ASUS\\\\Desktop\\\\x.xls"));
 						// 生成名为“第一页”的工作表，参数0表示这是第一页
 						WritableSheet sheet = book.createSheet("第一页", 0);
 						Label label1 = new Label(0, 0, "学号");// 对应为第1列第1行的数据
