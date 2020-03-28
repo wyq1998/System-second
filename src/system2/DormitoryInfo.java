@@ -932,6 +932,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 		}
+
 		if (e.getSource() == add && type == 4) {// 增加
 			String a = JOptionPane.showInputDialog("请输入您要插入的人员类型（1学生2学校二级防疫部门成员3学校二级防疫部门负责人4学校防控办）:");
 			JOptionPane.showMessageDialog(null, "插入已成功！", "警告", JOptionPane.WARNING_MESSAGE);
@@ -1355,7 +1356,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 				if (b.equals("是")) {
 					try {
 						// 打开文件
-						WritableWorkbook book = Workbook.createWorkbook(new File("C:\\\\Users\\\\ASUS\\\\Desktop\\\\x.xls"));
+WritableWorkbook book = Workbook.createWorkbook(new File("C:\\\\Users\\\\ASUS\\\\Desktop\\\\x.xls"));
 						// 生成名为“第一页”的工作表，参数0表示这是第一页
 						WritableSheet sheet = book.createSheet("第一页", 0);
 						Label label1 = new Label(0, 0, "学号");// 对应为第1列第1行的数据
