@@ -1374,7 +1374,7 @@ public class DormitoryInfo extends JPanel implements ActionListener {
 						sheet.addCell(label6);
 						System.out.println((data0.length) / 6);
 						for (int i = 0; i < data0.length; i++) {
-							Label label = new Label(i, 0, data0[i]);
+							Label label = new Label(i, 1, data0[i]);
 							sheet.addCell(label);
 						}
 						// 写入数据并关闭文件
